@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-form ref="form" :model="form" :rules="validationRules" status-icon>
+      <el-form-item label="An input:" prop="field">
+        <el-input class="input" v-model="form.field"/>          
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+const validationRules = {
+	field: [{ validator: (rule, value, callback) => {
+    callback()
+  } }],
+}
 
 export default {
-  name: "app",
-  components: {
-    HelloWorld
+	name: 'app',
+
+	data() {
+		return {
+			form: { field: 'some-very-very-veryvery-very-ver-long-string' },
+			validationRules,
+		}
+  },
+  
+  mounted() {
+    this.$refs.form.validate()
   }
-};
+}
 </script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.input {
+  width: 200px;
 }
 </style>
